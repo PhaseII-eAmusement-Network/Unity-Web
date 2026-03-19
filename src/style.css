@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@theme {
+--color-orchid: oklch(46.507% 0.18554 314.5);
+--color-orchid-50: oklch(94.011% 0.0321 328.96);
+--color-orchid-100: oklch(88.834% 0.06358 327.76);
+--color-orchid-200: oklch(78.474% 0.12613 325.3);
+--color-orchid-300: oklch(67.936% 0.18068 322.66);
+--color-orchid-400: oklch(57.669% 0.22389 318.72);
+--color-orchid-500: oklch(46.507% 0.18554 314.5);
+--color-orchid-600: oklch(39.581% 0.15594 310.18);
+--color-orchid-700: oklch(32.64% 0.12642 306.18);
+--color-orchid-800: oklch(26.051% 0.09591 301.23);
+--color-orchid-900: oklch(19.522% 0.0654 297.63);
+--color-orchid-950: oklch(16.345% 0.04926 298.22);
+
+--color-pink: oklch(63.748% 0.25475 12.298);
+--color-pink-50: oklch(78.139% 0.14227 357.02);
+--color-pink-100: oklch(74.732% 0.16911 358.3);
+--color-pink-200: oklch(69.287% 0.21393 1.5308);
+--color-pink-300: oklch(65.519% 0.24405 6.2671);
+--color-pink-400: oklch(63.748% 0.25475 12.298);
+--color-pink-500: oklch(52.932% 0.21155 11.586);
+--color-pink-600: oklch(41.529% 0.16605 10.351);
+--color-pink-700: oklch(29.275% 0.11726 7.6993);
+--color-pink-800: oklch(15.541% 0.06325 358.28);
+--color-pink-900: oklch(0% 0 none);
+--color-pink-950: oklch(0% 0 none);
+}

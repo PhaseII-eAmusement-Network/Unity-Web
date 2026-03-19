@@ -1,0 +1,106 @@
+<script setup>
+import { ref, computed } from "vue";
+import { RouterLink } from "vue-router";
+import { useStyleStore } from "@/stores/style.js";
+import { PhCaretUp } from "@phosphor-icons/vue";
+import { getButtonColor } from "@/colors.js";
+import BaseIcon from "@/components/BaseIcon.vue";
+import AsideMenuList from "@/components/Menus/AsideMenuList.vue";
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  },
+  isDropdownList: Boolean,
+});
+
+const emit = defineEmits(["menu-click"]);
+
+const styleStore = useStyleStore();
+
+const hasColor = computed(() => props.item && props.item.color);
+
+const asideMenuItemActiveStyle = computed(() =>
+  hasColor.value ? "" : styleStore.asideMenuItemActiveStyle,
+);
+
+const isDropdownActive = ref(false);
+
+const componentClass = computed(() => [
+  props.isDropdownList ? "py-3 px-6 text-sm" : "py-3",
+  hasColor.value
+    ? getButtonColor(props.item.color, false, true)
+    : `${styleStore.asideMenuItemStyle} dark:text-slate-300 dark:hover:text-white`,
+]);
+
+const hasDropdown = computed(() => !!props.item.menu);
+
+const menuClick = (event) => {
+  emit("menu-click", event, props.item);
+
+  if (hasDropdown.value) {
+    isDropdownActive.value = !isDropdownActive.value;
+  }
+};
+</script>
+
+<template>
+  <li>
+    <component
+      :is="item.to ? RouterLink : 'a'"
+      v-slot="vSlot"
+      :to="item.to ?? null"
+      :href="item.href ?? null"
+      :target="item.target ?? null"
+      class="flex cursor-pointer"
+      :class="componentClass"
+      @click="menuClick"
+    >
+      <BaseIcon
+        v-if="item.icon"
+        :icon="item.icon"
+        :fill="item.fill ? item.fill : 'regular'"
+        class="flex-none"
+        :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
+        w="w-16"
+        :size="18"
+      />
+      <span
+        class="grow text-ellipsis line-clamp-1"
+        :class="[
+          { 'pr-12': !hasDropdown },
+          vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '',
+        ]"
+        >{{ item.label }}</span
+      >
+      <BaseIcon
+        v-if="hasDropdown"
+        :icon="PhCaretUp"
+        :size="18"
+        :fill="item.fill ? item.fill : 'regular'"
+        class="flex-none transition-transform duration-150 ease-in-out"
+        :class="[
+          isDropdownActive ? 'rotate-0' : 'rotate-180',
+          vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '',
+        ]"
+        w="w-10"
+      />
+    </component>
+    <Transition
+      enter-active-class="transition-position duration-50 ease-linear"
+      enter-from-class="opacity-0 -translate-y-1"
+      enter-to-class="opacity-100 translate-y-0"
+      leave-active-class="transition-position duration-50 ease-linear"
+      leave-from-class="opacity-100 translate-y-0"
+      leave-to-class="opacity-0 -translate-y-1"
+    >
+      <AsideMenuList
+        v-show="isDropdownActive"
+        :menu="item.menu"
+        :class="[styleStore.asideMenuDropdownStyle, 'dark:bg-slate-800/50']"
+        is-dropdown-list
+      />
+    </Transition>
+  </li>
+</template>
