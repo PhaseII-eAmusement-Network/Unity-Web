@@ -1,9 +1,33 @@
 <script setup>
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import CardBox from "@/components/CardBox.vue";
-import BaseButton from "@/components/BaseButton.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
+import { APIOauthCallback } from "@/stores/api/oauth";
 
-const oauthUrl = import.meta.env.VITE_PHASEII_OAUTH_URL;
+const $route = useRoute();
+const $router = useRouter();
+const code = $route.query.code;
+const redirectPath = $route.query.redirect || "/";
+
+const userId = ref(null);
+
+onMounted(async () => {
+  if (code) {
+    await getToken();
+  } else {
+    console.error("No code provided in query parameters.");
+  }
+});
+
+async function getToken() {
+  const data = await APIOauthCallback(code);
+  if (data?.userId) {
+    userId.value = data.userId
+    $router.push(redirectPath);
+  }
+}
+
 </script>
 
 <template>
@@ -26,14 +50,12 @@ const oauthUrl = import.meta.env.VITE_PHASEII_OAUTH_URL;
               The PhaseII developer platform
             </span>
             <hr class="border-r my-1 w-full" />
-            <p class="text-lg relative bottom-0">Please log in</p>
+            <p class="text-lg relative bottom-0">Please wait</p>
           </div>
           <div class="md:border-r" />
           <div class="grid text-center justify-center">
-            <h1 class="text-xl wrap-break-word max-w-md">This application uses SSO with PhaseII for authentication</h1>
-            <div class="flex flex-col gap-2 my-4">
-              <BaseButton label="Log in with PhaseII" color="success" :href="oauthUrl" />
-            </div>
+            <h1 v-if="userId" class="text-xl wrap-break-word max-w-md">Welcome back! Please wait while we make your session.</h1>
+            <h1 v-else class="text-xl wrap-break-word max-w-md">OAuth verification failed! Please try again.</h1>
           </div>
         </div>
       </CardBox>

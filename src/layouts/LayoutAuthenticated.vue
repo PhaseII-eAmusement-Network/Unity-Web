@@ -11,7 +11,6 @@ import { ref, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import menuNavBar from "@/menuNavBar.js";
 import { useMainStore } from "@/stores/main.js";
-import WelcomeModal from "@/components/Modal/WelcomeModal.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import NavBar from "@/components/NavBar.vue";
 import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
@@ -88,9 +87,6 @@ const menuAside = computed(() => {
       'overflow-hidden lg:overflow-visible': isAsideMobileExpanded,
     }"
   >
-    <template v-if="!userLoaded">
-      <WelcomeModal />
-    </template>
     <div
       v-if="userLoaded"
       :class="[layoutAsidePadding, { 'ml-60 lg:ml-0': isAsideMobileExpanded }]"

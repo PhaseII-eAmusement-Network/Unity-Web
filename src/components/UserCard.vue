@@ -42,23 +42,6 @@ const props = defineProps({
   },
 });
 
-import { GetRandomMessage } from "@/constants";
-
-function swapRandomChars(str) {
-  if (str.length < 2) return str;
-
-  const arr = str.split("");
-  var i = Math.floor(Math.random() * str.length);
-  var j;
-
-  do {
-    j = Math.floor(Math.random() * str.length);
-  } while (j === i);
-  [arr[i], arr[j]] = [arr[j], arr[i]];
-
-  return arr.join("");
-}
-
 const cardData = ref({
   userId: null,
   userName: "",
@@ -96,8 +79,6 @@ if (props.overrideProfile) {
   };
 }
 
-const greeting = GetRandomMessage();
-
 function getCardStyle() {
   return `
     background-image: url('${ASSET_PATH}/card/${
@@ -126,16 +107,7 @@ function getCardStyle() {
           <h1
             v-if="!useSmall && !cardData.userCustomize?.disableGreeting"
             class="text-2xl md:text-xl lg:text-2xl"
-            :class="greeting.class ?? null"
-          >
-            {{ greeting.header[0]
-            }}<b
-              >{{
-                greeting.misInput
-                  ? swapRandomChars(cardData.userName)
-                  : cardData.userName
-              }} </b
-            >{{ greeting.header[1] }}
+          > Welcome to Unity, <b>{{ cardData.userName }}</b>
           </h1>
           <h1
             v-if="useSmall || cardData.userCustomize?.disableGreeting"
@@ -254,11 +226,9 @@ function getCardStyle() {
       >
         <p
           class="text-xl md:text-lg lg:text-2lg"
-          :class="greeting.class ?? null"
         >
-          {{ greeting.comment }}
+          You're gonna do great.
         </p>
-        <p class="text-xs italic">Greeting by: {{ greeting.author }}</p>
       </div>
     </BaseLevel>
   </CardBox>

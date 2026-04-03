@@ -3,6 +3,7 @@ import { PhCaretUp } from "@phosphor-icons/vue";
 import { RouterLink } from "vue-router";
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
 import { useStyleStore } from "@/stores/style.js";
+import { useMainStore } from "@/stores/main.js";
 import BaseIcon from "@/components/BaseIcon.vue";
 import UserAvatarCurrentUser from "@/components/UserAvatarCurrentUser.vue";
 import NavBarMenuList from "@/components/NavBarMenuList.vue";
@@ -47,7 +48,7 @@ const componentClass = computed(() => {
 });
 
 const itemLabel = computed(() =>
-  props.item.isCurrentUser ? "" : props.item.label,
+  props.item.isCurrentUser ? useMainStore().userName : props.item.label,
 );
 
 const isDropdownActive = ref(false);
@@ -101,7 +102,7 @@ onBeforeUnmount(() => {
     <div
       class="flex items-center"
       :class="{
-        'bg-gray-100 dark:bg-orchid-900 lg:bg-transparent lg:dark:bg-transparent p-3 lg:p-0':
+        'bg-gray-100 dark:bg-slate-900 lg:bg-transparent lg:dark:bg-transparent p-3 lg:p-0':
           item.menu,
       }"
     >
@@ -131,7 +132,7 @@ onBeforeUnmount(() => {
     </div>
     <div
       v-if="item.menu"
-      class="text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:left-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg lg:dark:bg-orchid-900 opacity-100 dark:border-slate-700"
+      class="text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:left-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg lg:dark:bg-slate-900 opacity-100 dark:border-slate-700"
       :class="{ 'lg:hidden': !isDropdownActive }"
     >
       <NavBarMenuList :menu="item.menu" @menu-click="menuClickDropdown" />

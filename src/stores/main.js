@@ -116,17 +116,9 @@ export const useMainStore = defineStore("main", {
       this.decrementLoading();
     },
 
-    async callApi(endpoint, method = "GET", data = null, extraHeaders = {}, server = "unity") {
-      var apiServer, apiKey;
-      if (server === "unity") {
-        apiServer = import.meta.env.VITE_UNITY_URL;
-        apiKey = import.meta.env.VITE_UNITY_KEY;
-      } else if (server === "rs") {
-        apiServer = import.meta.env.VITE_RS_URL;
-        apiKey = import.meta.env.VITE_RS_KEY;
-      } else {
-        throw new Error("Invalid server specified");
-      }
+    async callApi(endpoint, method = "GET", data = null, extraHeaders = {}) {
+      const apiServer = import.meta.env.VITE_UNITY_URL;
+      const apiKey = import.meta.env.VITE_UNITY_KEY;
 
       if (method === "GET") {
         this.incrementLoading();
@@ -191,34 +183,13 @@ export const useMainStore = defineStore("main", {
       }
     },
 
-    async createUserSession(username, password, remember) {
-      const request = {
-        username: username,
-        password: password,
-        remember: remember, // the 5th of November
-      };
-
-      try {
-        const data = await this.callApi(`/auth/session`, "POST", request);
-        if (data && data.status === "success") {
-          return true;
-        } else {
-          alert("Incorrect username or password!");
-          return false;
-        }
-      } catch (error) {
-        console.log("Error creating session:", error);
-        throw error;
-      }
-    },
-
     async loadUser() {
       try {
         const validSession = await this.checkUserSession();
         if (validSession && validSession.activeSession && !this.userLoaded) {
           const userId = validSession.userId;
           if (userId) {
-            const response = await this.callApi(`/user`, "GET", null, {}, "rs");
+            const response = await this.callApi(`/user`);
             var user = response.data;
             this.setUser({
               id: userId,
@@ -250,7 +221,7 @@ export const useMainStore = defineStore("main", {
 
     async getUser(userId) {
       try {
-        const data = await this.callApi(`/user/${userId}`, "GET", null, {}, "rs");
+        const data = await this.callApi(`/user/${userId}`);
         return data.user;
       } catch (error) {
         console.log("Error fetching user:", error);

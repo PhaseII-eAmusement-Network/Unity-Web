@@ -46,13 +46,13 @@ const asideLgCloseClick = (event) => {
   >
     <div
       :class="styleStore.asideStyle"
-      class="rounded-br-2xl md:rounded-none flex-1 flex flex-col pt-2 overflow-hidden dark:bg-orchid-900"
+      class="rounded-br-2xl md:rounded-none flex-1 flex flex-col pt-2 overflow-hidden dark:bg-orchid-950"
     >
       <div class="flex flex-col gap-4 my-2 pb-4 border-b-2">
         <div class="flex items-center gap-3 mx-2">
           <img class="rounded-full shadow-xl" src="/favicon.png" width="50"/>
           <h2 class="text-md">
-            <span class="tracking-tighter font-bold">Unity</span> Development Network
+            <span class="tracking-tighter font-bold">Unity</span> Development Platform
           </h2>
         </div>
       </div>

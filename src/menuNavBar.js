@@ -3,6 +3,8 @@ import {
   PhSignOut,
 } from "@phosphor-icons/vue";
 
+const P2_URL = import.meta.env.VITE_PHASEII_BASE_URL;
+
 export default [
   {
     isCurrentUser: true,
@@ -10,7 +12,8 @@ export default [
       {
         icon: PhUser,
         label: "Open on PhaseII",
-        to: "/profile",
+        href: `${P2_URL}/profile`,
+        target: 'blank',
       },
     ],
   },
