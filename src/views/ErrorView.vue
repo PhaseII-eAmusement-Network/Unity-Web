@@ -8,7 +8,7 @@ import LayoutGuest from "@/layouts/LayoutGuest.vue";
   <LayoutGuest>
     <div class="flex md:min-h-screen md:items-center md:justify-center">
       <CardBox
-        class="w-full md:w-auto rounded-none md:rounded-xl"
+        class="w-full md:w-auto rounded-none md:rounded-xl h-screen md:h-auto z-10"
         has-table
         is-auth
       >

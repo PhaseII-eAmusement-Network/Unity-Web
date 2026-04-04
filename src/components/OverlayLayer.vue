@@ -34,7 +34,7 @@ const styleStore = useStyleStore();
     <div
       v-show="active"
       :class="[type, zIndex]"
-      class="fixed inset-0 flex flex-col items-center justify-center bg-linear-to-tr dark:from-gray-700 dark:via-gray-900 dark:to-gray-700 transform"
+      class="fixed inset-0 flex flex-col items-center justify-center bg-linear-to-tr dark:from-orchid-900 dark:via-orchid-800 dark:to-orchid-900 transform"
     >
       <div
         class="absolute inset-0"

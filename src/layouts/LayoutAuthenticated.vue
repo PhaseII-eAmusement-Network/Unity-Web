@@ -4,8 +4,10 @@ import {
   PhDotsThreeCircle,
   PhMonitor,
   PhCrown,
-  PhDiscordLogo,
   PhTextAa,
+  PhGlobe,
+  PhUsersThree,
+  PhCrownCross,
 } from "@phosphor-icons/vue";
 import { ref, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -17,13 +19,15 @@ import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
 import AsideMenu from "@/components/Menus/AsideMenu.vue";
 import FooterBar from "@/components/FooterBar.vue";
 import BaseButton from "@/components/BaseButton.vue";
+const BASE_URL = import.meta.env.VITE_PHASEII_BASE_URL;
+const DOCS_URL = import.meta.env.VITE_DOCS_URL;
 
 const router = useRouter();
 const route = useRoute();
 
 const mainStore = useMainStore();
 
-const userLoaded = true; //computed(() => mainStore.userLoaded);
+const userLoaded = computed(() => mainStore.userLoaded);
 const userCustomize = computed(() => mainStore.userCustomize);
 
 const layoutAsidePadding = "xl:pl-60";
@@ -46,10 +50,15 @@ const menuClick = (event, item) => {
 };
 
 const menuAside = computed(() => {
-  // const sortedArcades = mainStore.userArcades.map((arcade) => ({
-  //   label: arcade.name,
-  //   to: `/arcade/${arcade.id}`,
-  // }));
+  const sortedTeams = mainStore.userTeams.map((team) => ({
+    label: team.name,
+    to: `/team/view/${team.id}`,
+  }));
+
+  const sortedAdminTeams = mainStore.adminTeams.map((team) => ({
+    label: team.name,
+    to: `/team/view/${team.id}`,
+  }));
 
   const adminMenu = [
     {
@@ -66,15 +75,30 @@ const menuAside = computed(() => {
       icon: PhCrown,
       menu: adminMenu,
     });
+
+    sideMenu.push({
+      label: "Admin Teams",
+      icon: PhCrownCross,
+      menu: sortedAdminTeams,
+    });
   }
 
-  // if (sortedArcades.length) {
-  //   sideMenu.push({
-  //     label: "My Teams",
-  //     icon: PhUsersThree,
-  //     menu: sortedArcades,
-  //   });
-  // }
+  var teamsMenu = [
+    {
+      label: "Create Team",
+      to: "/team/create",
+    },
+  ];
+
+  if (sortedTeams.length) {
+    teamsMenu = teamsMenu.concat(sortedTeams)
+  }
+
+  sideMenu.push({
+      label: "Teams",
+      icon: PhUsersThree,
+      menu: teamsMenu,
+    });
 
   return sideMenu;
 });
@@ -124,10 +148,10 @@ const menuAside = computed(() => {
           <div class="h-full flex place-items-center ml-4 gap-4">
             <BaseButton
               small
-              label="Discord"
-              :icon="PhDiscordLogo"
+              label="PhaseII"
+              :icon="PhGlobe"
               color="info"
-              :href="DISCORD_URL"
+              :href="BASE_URL"
               target="_blank"
             />
             <BaseButton

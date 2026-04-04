@@ -5,7 +5,7 @@ export const gradientBgPinkRed = `${gradientBgBase} from-pink-400 via-red-500 to
 
 export const colorsBgLight = {
   white: "bg-white text-black",
-  light: "bg-white text-black dark:bg-slate-900/70 dark:text-white",
+  light: "bg-white text-black dark:bg-orchid-900/70 dark:text-white",
   contrast: "bg-gray-800 text-white dark:bg-white dark:text-black",
   success: "bg-emerald-700 border-emerald-500 text-white",
   danger: "bg-red-700 border-red-500 text-white",
@@ -13,6 +13,7 @@ export const colorsBgLight = {
   info: "bg-blue-700 border-blue-500 text-white",
   sakura: "bg-pink-700 border-pink-500 text-white",
   gold: "bg-amber-700 border-amber-500 text-white",
+  slight_danger: "bg-red-600 border-red-500",
 };
 
 export const colorsText = {
@@ -62,9 +63,9 @@ export const getButtonColor = (
     },
     active: {
       white: "bg-gray-100",
-      whiteDark: "bg-gray-100 dark:bg-slate-800",
-      lightDark: "bg-gray-200 dark:bg-slate-700",
-      contrast: "bg-gray-700 dark:bg-slate-100",
+      whiteDark: "bg-gray-100 dark:bg-orchid-800",
+      lightDark: "bg-gray-200 dark:bg-orchid-700",
+      contrast: "bg-gray-700 dark:bg-orchid-100",
       success: "bg-emerald-700 dark:bg-emerald-600",
       danger: "bg-red-700 dark:bg-red-600",
       warning: "bg-yellow-700 dark:bg-yellow-600",
@@ -74,8 +75,8 @@ export const getButtonColor = (
     },
     bg: {
       white: "bg-white text-black",
-      whiteDark: "bg-white text-black dark:bg-slate-900 dark:text-white",
-      lightDark: "bg-gray-100 text-black dark:bg-slate-800 dark:text-white",
+      whiteDark: "bg-white text-black dark:bg-orchid-900 dark:text-white",
+      lightDark: "bg-gray-100 text-black dark:bg-orchid-800 dark:text-white",
       contrast: "bg-gray-800 text-white dark:bg-white dark:text-black",
       success: "bg-emerald-600 dark:bg-emerald-700 text-white",
       danger: "bg-red-600 dark:bg-red-800 text-white",
@@ -86,9 +87,9 @@ export const getButtonColor = (
     },
     bgHover: {
       white: "hover:bg-gray-100",
-      whiteDark: "hover:bg-gray-100 hover:dark:bg-slate-800",
-      lightDark: "hover:bg-gray-200 hover:dark:bg-slate-700",
-      contrast: "hover:bg-gray-700 hover:dark:bg-slate-100",
+      whiteDark: "hover:bg-gray-100 hover:dark:bg-orchid-800",
+      lightDark: "hover:bg-gray-200 hover:dark:bg-orchid-700",
+      contrast: "hover:bg-gray-700 hover:dark:bg-orchid-100",
       success:
         "hover:bg-emerald-700 hover:border-emerald-700 hover:dark:bg-emerald-600 hover:dark:border-emerald-600",
       danger:
@@ -120,7 +121,7 @@ export const getButtonColor = (
     },
     outlineHover: {
       contrast:
-        "hover:bg-gray-800 hover:text-gray-100 hover:dark:bg-slate-100 hover:dark:text-black",
+        "hover:bg-gray-800 hover:text-gray-100 hover:dark:bg-orchid-100 hover:dark:text-black",
       success:
         "hover:bg-emerald-600 hover:text-white hover:text-white hover:dark:text-white hover:dark:border-emerald-600",
       danger:

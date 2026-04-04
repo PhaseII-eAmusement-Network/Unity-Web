@@ -20,7 +20,7 @@ const toggle = () => {
 <template>
   <div class="rounded-lg overflow-hidden">
     <button
-      class="w-full flex items-center justify-between px-4 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-700 transition duration-25"
+      class="w-full flex items-center justify-between px-4 py-3 bg-orchid-100 dark:bg-orchid-800 hover:bg-orchid-200 hover:dark:bg-orchid-700 transition duration-25"
       @click="toggle"
     >
       <span class="text-lg">
@@ -44,7 +44,7 @@ const toggle = () => {
     >
       <div
         v-show="open"
-        class="px-4 py-3 border-t text-left bg-slate-50 dark:bg-slate-700"
+        class="px-4 py-3 border-t text-left bg-orchid-50 dark:bg-orchid-700"
       >
         <slot />
       </div>

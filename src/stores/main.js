@@ -16,7 +16,10 @@ export const useMainStore = defineStore("main", {
     userData: null,
     discordRoles: null,
     userProfiles: [],
-    userArcades: [],
+    userArcade: [],
+    userTeams: [],
+    joinedTeams: [],
+    adminTeams: [],
     profiles: {},
     userCustomize: {},
     userScoreStats: {},
@@ -77,6 +80,15 @@ export const useMainStore = defineStore("main", {
       }
       if (payload.arcades) {
         this.userArcades = payload.arcades;
+      }
+      if (payload.myTeams) {
+        this.userTeams = payload.myTeams;
+      }
+      if (payload.joinedTeams) {
+        this.joinedTeams = payload.joinedTeams;
+      }
+      if (payload.adminTeams) {
+        this.adminTeams = payload.adminTeams;
       }
       if (payload.customize) {
         this.userCustomize = payload.customize;
@@ -200,7 +212,10 @@ export const useMainStore = defineStore("main", {
               data: user.data,
               discordRoles: user.discordRoles,
               profiles: user.profiles,
-              arcades: user.arcades,
+              arcades: user?.arcades,
+              myTeams: user?.myTeams,
+              joinedTeams: user?.joinedTeams,
+              adminTeams: user?.adminTeams,
               customize: user.data?.customize,
               userScoreStats: user.scoreStats,
               public: user.public,

@@ -33,7 +33,7 @@ const username = computed(() => props.username);
         :alt="username"
         width="200"
         height="200"
-        class="w-full h-auto bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden drop-shadow-lg"
+        class="w-full h-auto bg-gray-100 dark:bg-orchid-800 rounded-full overflow-hidden drop-shadow-lg"
       />
       <img
         v-if="border"

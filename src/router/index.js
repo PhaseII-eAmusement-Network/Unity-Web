@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useMainStore } from "@/stores/main";
-import HomeView from '@/views/HomeView.vue'
+import HomeView from '@/views/HomeView.vue';
+import CreateView from '@/views/Team/CreateView.vue';
+import AppCreateView from '@/views/App/CreateView.vue';
 
 const routes = [
   {
@@ -11,6 +13,33 @@ const routes = [
     path: "/",
     name: "dashboard",
     component: HomeView,
+  },
+  {
+    meta: {
+      requiresAuth: true,
+      title: "Create Team",
+    },
+    path: "/team/create",
+    name: "createTeam",
+    component: CreateView,
+  },
+  {
+    meta: {
+      requiresAuth: true,
+      title: "Team Overview",
+    },
+    path: "/team/view/:id",
+    name: "team",
+    component: () => import("@/views/Team/TeamView.vue"),
+  },
+  {
+    meta: {
+      requiresAuth: true,
+      title: "Create App",
+    },
+    path: "/team/:teamId/app/create",
+    name: "createApp",
+    component: AppCreateView,
   },
   {
     meta: {

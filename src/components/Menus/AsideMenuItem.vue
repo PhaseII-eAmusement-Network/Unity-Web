@@ -31,7 +31,7 @@ const componentClass = computed(() => [
   props.isDropdownList ? "py-3 px-6 text-sm" : "py-3",
   hasColor.value
     ? getButtonColor(props.item.color, false, true)
-    : `${styleStore.asideMenuItemStyle} dark:text-slate-300 dark:hover:text-white`,
+    : `${styleStore.asideMenuItemStyle} dark:text-orchid-100 dark:hover:text-white`,
 ]);
 
 const hasDropdown = computed(() => !!props.item.menu);
@@ -98,7 +98,7 @@ const menuClick = (event) => {
       <AsideMenuList
         v-show="isDropdownActive"
         :menu="item.menu"
-        :class="[styleStore.asideMenuDropdownStyle, 'dark:bg-slate-800/50']"
+        :class="[styleStore.asideMenuDropdownStyle, 'dark:bg-orchid-800/50']"
         is-dropdown-list
       />
     </Transition>
