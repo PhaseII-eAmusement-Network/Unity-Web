@@ -1,6 +1,6 @@
 <script setup>
 import { reactive, ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import {
   PhCloudArrowUp,
   PhFileImage,
@@ -22,10 +22,12 @@ import SectionTitleLine from "@/components/SectionTitleLine.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import { useMainStore } from "@/stores/main";
 import { APIGetTeam } from "@/stores/api/team";
+import { APIPutApplication } from "@/stores/api/application";
 import { applicationIntents, applicationWebhooks } from "@/constants/developer";
 
 const mainStore = useMainStore();
 const $route = useRoute();
+const $router = useRouter();
 const teamId = $route.params.teamId;
 const teamData = ref(null);
 
@@ -133,21 +135,28 @@ function removeWebhook(authKey) {
   );
 }
 
-async function requestApp() {
-  
+async function submitApp() {
+  const response = await APIPutApplication(teamId, appForm)
+  if (!response?.appId) {
+    window.alert('Failed to create team!')
+    return;
+  }
+  else {
+    $router.push(`/team/${teamId}/application/view/${response.appId}`)
+  }
 }
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain v-if="teamData != null">
-      <SectionTitleLine
-        :icon="PhCloudArrowUp"
-        title="Create an Application"
-        main
-      />
-      <h2 class="text-xl mb-6">Please note that this app will be registered under <span class="font-bold text-orchid-100">{{ teamData.name }}</span></h2>
-
+    <SectionTitleLine
+      :icon="PhCloudArrowUp"
+      title="Create an Application"
+      main
+    />
+    <h2 class="text-xl mb-6">Please note that this app will be registered under <span class="font-bold text-orchid-100">{{ teamData.name }}</span></h2>
+    <form @submit.prevent="submitApp">
       <CardBox class="row-span-2 mb-6">
         <PillTag color="info" label="General" class="mb-2" />
         <FormField label="Name">
@@ -172,6 +181,7 @@ async function requestApp() {
             label="Image Upload"
             accept="image/*"
             :icon="PhFileImage"
+            required
           />
         </FormField>
       </CardBox>
@@ -293,6 +303,7 @@ async function requestApp() {
                 v-for="field of applicationWebhooks.find(
                   (webhookData) => webhookData.id === newWebhook.type,
                 )?.fields"
+                :key="field"
               >
                 <template v-if="field === 'arcadeId'">
                   <FormField
@@ -322,7 +333,7 @@ async function requestApp() {
                   color-prop="bg-orchid-800 dark:bg-orchid-800"
                 >
                   <div class="flex justify-between items-center">
-                    <div class="m-[-5px]">
+                    <div class="-m-1.25">
                       <PillTag
                         color="info"
                         :label="webhook.type"
@@ -337,6 +348,7 @@ async function requestApp() {
                       </samp>
                       <h2
                         v-for="(value, field) of webhook.fields"
+                        :key="field"
                         class="text-sm font-mono mt-2"
                       >
                         {{ field }}: {{ value }}
@@ -356,10 +368,11 @@ async function requestApp() {
       </CardBox>
       <BaseButton
         :small="false"
-        label="Submit"
+        type="submit"
+        label="Create App"
         color="success"
-        @click="console.log(appForm)"
       />
+    </form>
     </SectionMain>
   </LayoutAuthenticated>
 </template>

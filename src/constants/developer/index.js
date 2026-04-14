@@ -77,4 +77,12 @@ export const applicationWebhooks = [
     tip: "Called when a PASELI transaction completes. Requires an arcade to be specified",
     fields: ["arcadeId"],
   },
+  {
+    id: "game.score",
+    type: "game",
+    short: "score",
+    label: "Game Score",
+    tip: "Called when a Score is saved. Make one per game",
+    fields: ["gameId"],
+  },
 ];

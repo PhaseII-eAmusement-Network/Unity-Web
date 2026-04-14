@@ -21,6 +21,7 @@ import UserAvatar from "@/components/UserAvatar.vue";
 import { useMainStore } from "@/stores/main";
 import { APIGetTeam, APIUpdateTeam, APIPutTeamMember, APIDeleteTeamMember } from "@/stores/api/team";
 const P2_URL = import.meta.env.VITE_PHASEII_BASE_URL;
+const CDN_URL = import.meta.env.VITE_CDN_URL;
 
 const mainStore = useMainStore();
 const $route = useRoute();
@@ -122,6 +123,30 @@ const navigateToProfile = (userID) => {
       <CardBox class="row-span-2 mb-6">
         <h1 class="text-2xl font-bold">{{ teamData.name }}</h1>
         <span class="text-lg">{{ teamData?.data?.about }}</span>
+        <hr class="my-2" />
+        <h2 class="text-xl">Created by <span class="font-bold">{{ teamData?.ownerData?.name }}</span></h2>
+        <p v-if="teamData?.members && teamData.members.length" class="text-lg">
+          Members: 
+          <span
+            v-for="(member, index) in teamData.members"
+            :key="member.name"
+            class="font-bold"
+          >
+            <template v-if="teamData.members.length === 2 && index === 0">{{
+              member.name
+            }}</template>
+            <template v-else-if="teamData.members.length === 2 && index === 1">
+              <span class="font-normal"> and</span>
+              {{ member.name }}.</template
+            >
+            <template v-else-if="index === 0">{{ member.name }}</template>
+            <template v-else-if="index === teamData.members.length - 1"
+              >, <span class="font-normal"> and</span>
+              {{ member.name }}.</template
+            >
+            <template v-else>, {{ member.name }}</template>
+          </span>
+        </p>
       </CardBox>
 
       <template v-if="(teamData.owner === mainStore.userId) || (mainStore.userAdmin)">
@@ -254,9 +279,37 @@ const navigateToProfile = (userID) => {
           :to="`/team/${teamData.id}/app/create`"
         />
       </SectionTitleLine>
+      <template v-if="teamData?.applications?.length">
       <CardBox class="row-span-2 mb-6">
-        <h1 class="text-2xl font-bold">{{ teamData.name }}</h1>
+        <div class="grid grid-cols-3 gap-6">
+          <div
+            v-for="application of teamData?.applications" :key="application.id"
+            class="flex flex-col justify-center p-4 rounded-xl bg-orchid-700 hover:bg-orchid-800 hover:drop-shadow-xl transition-all hover:cursor-pointer hover:text-shadow-orchid-100"
+            @click="$router.push(`/team/${teamData.id}/application/view/${application.id}`)"
+          >
+            <div v-if="application?.data?.img" class="w-full flex justify-center">
+              <img
+                :src="`${CDN_URL}/${application?.data?.img}`"
+                width="75"
+                class="rounded-full shadow-lg mb-2"
+              />
+            </div>
+            <div class="mb-2 text-center">
+              <h1 class="text-lg md:text-xl font-bold">
+                {{ application.name }}
+              </h1>
+              <h2 v-if="application.oauthEnable">OAuth Enabled</h2>
+              <!-- <h2>{{ appInfo.webhooks?.length || 0 }} Webhook(s)</h2> -->
+            </div>
+          </div>
+        </div>
       </CardBox>
+      </template>
+      <template v-else>
+        <CardBox class="row-span-2 mb-6">
+          <span class="text-xl">No applications ☹️</span>
+        </CardBox>
+      </template>
     </SectionMain>
   </LayoutAuthenticated>
 </template>

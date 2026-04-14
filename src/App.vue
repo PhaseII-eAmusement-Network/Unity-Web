@@ -27,6 +27,19 @@ watch(isActive, (val) => {
     }, 150);
   }
 });
+
+watch(errorCode, (val) => {
+  if (val) {
+    console.log(errorCode)
+    showModal.value = true;
+  } else {
+    setTimeout(() => {
+      if (!errorCode.value) {
+        showModal.value = false;
+      }
+    }, 150);
+  }
+});
 </script>
 
 <template>

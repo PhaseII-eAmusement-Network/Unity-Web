@@ -3,6 +3,7 @@ import { useRouter } from "vue-router";
 import CardBox from "@/components/CardBox.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import BaseButton from "@/components/BaseButton.vue";
+import BaseButtons from "@/components/BaseButtons.vue";
 import { useMainStore } from "@/stores/main";
 import { PhCloudCheck, PhCloudX, PhStar } from "@phosphor-icons/vue";
 
@@ -30,6 +31,18 @@ defineProps({
 
 function hotReload() {
   $router.go();
+  return null;
+}
+
+function goBack() {
+  $router.go(-1);
+  return null;
+}
+
+function closeModal() {
+  mainStore.errorCode = null;
+  mainStore.decrementLoading();
+  mainStore.decrementSaving();
   return null;
 }
 </script>
@@ -98,15 +111,29 @@ function hotReload() {
       <h1 class="text-lg md:text-xl">
         Error: <span class="text-red-500">{{ errorCode }}</span>
       </h1>
-      <div>
+      <BaseButtons>
+        <div class="flex justify-center w-full">
+        <BaseButton
+          color="warning"
+          label="Go Back"
+          :small="false"
+          @click="goBack()"
+        />
         <BaseButton
           type="submit"
-          color="info"
+          color="success"
           label="Reload"
           :small="false"
           @click="hotReload()"
         />
-      </div>
+        <BaseButton
+          color="info"
+          label="Close"
+          :small="false"
+          @click="closeModal()"
+        />
+        </div>
+      </BaseButtons>
     </div>
   </CardBox>
 </template>

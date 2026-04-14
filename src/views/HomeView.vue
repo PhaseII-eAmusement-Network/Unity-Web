@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { PhCode, PhDatabase, PhFlagCheckered, PhUsersThree } from "@phosphor-icons/vue";
+import { PhDatabase, PhFlagCheckered, PhUsersThree } from "@phosphor-icons/vue";
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue';
 import BaseButton from "@/components/BaseButton.vue";
@@ -17,9 +17,7 @@ const mainStore = useMainStore();
   <LayoutAuthenticated>
     <SectionMain>
       <UserCard />
-
-      <SectionTitleLine :icon="PhCode" title="Dashboard" main class="mt-6" />
-        <CardBox class="row-span-2 mb-6">
+        <CardBox class="row-span-2 mt-8 mb-6">
           <h1 class="text-xl md:text-2xl">
             Welcome to the <samp>Unity</samp> Developer Platform!
           </h1>

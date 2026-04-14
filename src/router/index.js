@@ -43,6 +43,15 @@ const routes = [
   },
   {
     meta: {
+      requiresAuth: true,
+      title: "App Overview",
+    },
+    path: "/team/:teamId/application/view/:appId",
+    name: "app",
+    component: () => import("@/views/App/ApplicationView.vue"),
+  },
+  {
+    meta: {
       title: "Login",
     },
     path: "/auth/login",

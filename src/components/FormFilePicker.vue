@@ -48,38 +48,17 @@ watch(modelValueProp, (value) => {
 const upload = (event) => {
   const value = event.target.files || event.dataTransfer.files;
 
-  file.value = value[0];
-
-  emit("update:modelValue", file.value);
-
-  // Use this as an example for handling file uploads
-  // let formData = new FormData()
-  // formData.append('file', file.value)
-
-  // const mediaStoreRoute = `/your-route/`
-
-  // axios
-  //   .post(mediaStoreRoute, formData, {
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data'
-  //     },
-  //     onUploadProgress: progressEvent
-  //   })
-  //   .then(r => {
-  //
-  //   })
-  //   .catch(err => {
-  //
-  //   })
+  if (value.length > 0) {
+    file.value = value[0];
+    
+    // Create FormData object for file upload
+    const formData = new FormData();
+    formData.append('file', file.value);
+    
+    // Emit the file object for your API call
+    emit("update:modelValue", file.value);
+  }
 };
-
-// const uploadPercent = ref(0)
-//
-// const progressEvent = progressEvent => {
-//   uploadPercent.value = Math.round(
-//     (progressEvent.loaded * 100) / progressEvent.total
-//   )
-// }
 </script>
 
 <template>
