@@ -54,7 +54,7 @@ const appForm = reactive({
   image: null,
   useOAuth: false,
   callbackUri: null,
-  intents: [],
+  intents: {},
   useWebhooks: false,
   webhookList: [],
 });
@@ -141,9 +141,11 @@ async function submitApp() {
     window.alert('Failed to create team!')
     return;
   }
-  else {
-    $router.push(`/team/${teamId}/application/view/${response.appId}`)
+
+  if (response.clientSecret) {
+    window.alert(`Your X-API-Key is ${response.clientSecret}\nPlease save this as it will not be shown again!`)
   }
+  $router.push(`/team/${teamId}/application/view/${response.appId}`)
 }
 </script>
 
@@ -216,7 +218,7 @@ async function submitApp() {
             <template v-for="intent in applicationIntents" :key="intent.id">
               <div class="grid md:flex justify-between">
                 <FormCheckRadio
-                  v-model="appForm.intents"
+                  v-model="appForm.intents[intent.id]"
                   :name="'intents'"
                   :label="intent.label"
                   :input-value="intent.id"

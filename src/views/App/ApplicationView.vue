@@ -7,6 +7,7 @@ import {
   PhGear,
   PhInfo,
   PhKeyhole,
+  PhLinkSimple,
   PhWebhooksLogo,
 } from "@phosphor-icons/vue";
 import SectionMain from "@/components/SectionMain.vue";
@@ -24,6 +25,7 @@ import { useMainStore } from "@/stores/main";
 import { APIGetApplication, APIUpdateApplication } from "@/stores/api/application";
 import { applicationIntents } from "@/constants/developer";
 
+const P2_URL = import.meta.env.VITE_PHASEII_BASE_URL;
 const CDN_URL = import.meta.env.VITE_CDN_URL;
 const mainStore = useMainStore();
 const $route = useRoute();
@@ -67,15 +69,19 @@ async function updateApp() {
 
   const response = await APIUpdateApplication(teamId, appId, newApp.value);
 
+  if (response.clientSecret) {
+    window.alert(`Your X-API-Key is\n\n${response.clientSecret}\n\nPlease save this as it will not be shown again!`)
+  }
+
   if (response.status != "error") {
     newApp.value = null;
     getApp();
   }
 }
 
-async function deleteTeam() {
+async function deleteApp() {
   const confirmed = window.confirm(
-    "Are you really?\nThis will remove all webhooks, registrations, apps, auth tokens, and more.",
+    "Are you really?\nThis will remove all webhooks, registrations, auth tokens.",
   );
   if (confirmed) {
     const response = null // await APIAdminDeleteArcade(arcadeId);
@@ -166,14 +172,14 @@ async function deleteTeam() {
             <div>
               <BaseButton
                 color="danger"
-                label="Delete Team"
-                @click="deleteTeam()"
+                label="Delete App"
+                @click="deleteApp()"
               />
             </div>
           </CardBox>
           <CardBox
             is-form
-            class="lg:mb-6"
+            class="mb-6"
             @submit.prevent="updateApp"
           >
             <PillTag
@@ -192,13 +198,23 @@ async function deleteTeam() {
             </FormField>
 
             <template v-if="newApp?.oauthEnable">
-              <FormField label="Callback URL" >
+              <FormField
+                label="Callback URI"
+                help="The URL that the user will be redirected to from the authorization page (ex: input of https://mycoolapp.my.domain/callback/url will redirect user to https://address/callback/url?code= )"
+              >
                 <FormControl
                   v-model="newApp.data.callbackUri"
+                  :icon="PhLinkSimple"
                   name="callback"
-                  required
+                  placeholder="https://my.domain/callback/url"
                 />
               </FormField>
+
+              <div v-if="appData.oauthId" class="text-md font-bold pb-4">
+                <span>Your oAuth URL is </span>
+                <a :href="`${P2_URL}/profile/authorize?client_id=${appData.oauthId}`" target="blank" class="text-orchid-100 hover:text-orchid-200 transition-colors">{{P2_URL}}/profile/authorize?client_id={{appData.oauthId}}</a>
+              </div>
+
               <FormField
                 label="Intents"
                 help="Select what you'd like your app to do"
