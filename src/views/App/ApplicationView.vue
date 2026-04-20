@@ -21,13 +21,11 @@ import PillTag from "@/components/PillTag.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import FormCheckRadio from "@/components/FormCheckRadio.vue";
 import FormFilePicker from "@/components/FormFilePicker.vue";
-import { useMainStore } from "@/stores/main";
 import { APIGetApplication, APIUpdateApplication } from "@/stores/api/application";
 import { applicationIntents } from "@/constants/developer";
 
 const P2_URL = import.meta.env.VITE_PHASEII_BASE_URL;
 const CDN_URL = import.meta.env.VITE_CDN_URL;
-const mainStore = useMainStore();
 const $route = useRoute();
 const $router = useRouter();
 const teamId = $route.params.teamId;
@@ -116,7 +114,6 @@ async function deleteApp() {
         </BaseLevel>
       </CardBox>
 
-      <template v-if="(appData.owner === mainStore.userId) || (mainStore.userAdmin)">
       <SectionTitleLine :icon="PhGear" title="App Administration" main />
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <CardBox
@@ -252,7 +249,6 @@ async function deleteApp() {
             </div>
           </CardBox>
         </div>
-      </template>
 
       <SectionTitleLine
         :icon="PhWebhooksLogo"

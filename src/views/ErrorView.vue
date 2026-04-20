@@ -15,7 +15,7 @@ import LayoutGuest from "@/layouts/LayoutGuest.vue";
         <div class="p-4 flex flex-col w-full space-y-2">
           <div class="flex flex-col items-center text-wrap h-full">
             <img src="/favicon.png" width="75" class="rounded-full shadow-lg mb-2" />
-            <h1 class="text-xl"><samp>Unity</samp></h1>
+            <h1 class="text-xl"><span class="tracking-tighter font-bold">Unity</span></h1>
             <p class="text-sm text-gray-700 dark:text-white/75">
               Broken since 2026
             </p>

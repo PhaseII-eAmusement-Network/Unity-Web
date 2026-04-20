@@ -19,7 +19,7 @@ const oauthUrl = import.meta.env.VITE_PHASEII_OAUTH_URL;
         >
           <div class="flex flex-col items-center text-wrap h-full md:mt-5">
             <img src="/favicon.png" :width="75" class="rounded-full shadow-lg mb-2" />
-            <h1 class="text-xl"><samp>Unity</samp></h1>
+            <h1 class="text-xl"><span class="tracking-tighter font-bold">Unity</span></h1>
             <span
               class="text-sm text-gray-700 dark:text-white/75"
             >

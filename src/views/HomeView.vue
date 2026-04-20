@@ -19,7 +19,7 @@ const mainStore = useMainStore();
       <UserCard />
         <CardBox class="row-span-2 mt-8 mb-6">
           <h1 class="text-xl md:text-2xl">
-            Welcome to the <samp>Unity</samp> Developer Platform!
+            Welcome to the <span class="tracking-tighter font-bold">Unity</span> Developer Platform!
           </h1>
 
           <p>
