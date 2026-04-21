@@ -207,10 +207,17 @@ async function deleteApp() {
                 />
               </FormField>
 
-              <div v-if="appData.oauthId" class="text-md font-bold pb-4">
-                <span>Your oAuth URL is </span>
-                <a :href="`${P2_URL}/profile/authorize?client_id=${appData.oauthId}`" target="blank" class="text-orchid-100 hover:text-orchid-200 transition-colors">{{P2_URL}}/profile/authorize?client_id={{appData.oauthId}}</a>
-              </div>
+              <template v-if="appData.oauthId">
+                <div class="text-md font-bold pb-4">
+                  <span>Your oAuth ID is </span>
+                  <a :href="`${P2_URL}/profile/authorize?client_id=${appData.oauthId}`" target="blank" class="text-orchid-100 hover:text-orchid-200 transition-colors">{{appData.oauthId}}</a>
+                  <p class="font-normal">This goes in the header as <samp>X-AUTH-ID</samp>. You must send the header <samp>X-API-Key</samp> as well. This is the token you were given when you enabled oAuth. This is only given once and isn't stored so we cannot provide it again. If you forgot your token, turn oAuth off and then on again. Please note that your oAuth ID and URL will change!</p>
+                </div>
+                <div class="text-md font-bold pb-4">
+                  <span>Your oAuth URL is </span>
+                  <a :href="`${P2_URL}/profile/authorize?client_id=${appData.oauthId}`" target="blank" class="text-orchid-100 hover:text-orchid-200 transition-colors">{{P2_URL}}/profile/authorize?client_id={{appData.oauthId}}</a>
+                </div>
+              </template>
 
               <FormField
                 label="Intents"
